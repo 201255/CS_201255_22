@@ -4,7 +4,10 @@ module.exports ={
         
     },
     db: {
-        pg: 5432,
-        mysql: 3306
+        user:'postgres',
+        host:'localhost',
+        database:'CSDB',
+        password:'feisima54321',
+        port:'5432',
     }
 }

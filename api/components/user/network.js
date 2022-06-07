@@ -1,11 +1,10 @@
-const { query } = require('express');
-const express = require('express');
+import { Router } from 'express';
 
-const response = require('../../../network/response');
-const { getConnection } = require('../../../model/db');
-const { request } = require('express');
-var cors = require('cors')
-const router = express.Router();
+import { success as _success } from '../../../network/response.js';
+import  getConnection  from '../../../model/db.js';
+
+import cors from 'cors';
+const router = Router();
 
 var allowlist = ['http://localhost:3000', ''];
 var corsOptionsDelegate = function (req, callback) {
@@ -29,8 +28,8 @@ router.get('/obtener',cors(corsOptionsDelegate), async function (req, res) {
     }
 
     client.query(query_request)
-        .then(r => { response.success(req, res, r, 200); })
-        .catch(e => { response.success(req, res, e.stack, 400); })
+        .then(r => { _success(req, res, r, 200); })
+        .catch(e => { _success(req, res, e.stack, 400); })
 })
 
 router.post('/login', function (req, res) {
@@ -77,8 +76,8 @@ router.post('/register2', cors(corsOptionsDelegate),async function (req, res) {
     };
 
     client.query(query_request)
-        .then(r => { response.success(req, res, r, 200); })
-        .catch(e => { response.success(req, res, e, 200); })
+        .then(r => { _success(req, res, r, 200); })
+        .catch(e => { _success(req, res, e, 200); })
 
 });
 
@@ -95,8 +94,8 @@ router.delete('/delete', cors(corsOptionsDelegate),async function (req, res) {
     };
 
     client.query(query_request)
-        .then(r => { response.success(req, res, r, 200); })
-        .catch(e => { response.success(req, res, e, 400); })
+        .then(r => { _success(req, res, r, 200); })
+        .catch(e => { _success(req, res, e, 400); })
 });
 
 router.put('/update',cors(corsOptionsDelegate), async function (req, res) {
@@ -115,9 +114,9 @@ router.put('/update',cors(corsOptionsDelegate), async function (req, res) {
     };
 
     client.query(query_request)
-        .then(r => { response.success(req, res, r, 200); })
-        .catch(e => { response.success(req, res, e.stack, 400); })
+        .then(r => { _success(req, res, r, 200); })
+        .catch(e => { _success(req, res, e.stack, 400); })
 
 });
 
-module.exports = router;
+export default router;

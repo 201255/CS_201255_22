@@ -1,14 +1,16 @@
-const {Pool}= require ('pg');
+import  pkg  from 'pg';
+const {Pool} = pkg;
+//import  Pool from 'pg/lib/index.js';
 
-const config = require ('../config');
+import { db } from '../config.js';
 
 async function getConnection(){
     const client = new Pool({
-        user: config.db.user,
-        host: config.db.host,
-        database: config.db.database,
-        password: config.db.password,
-        port: config.db.port,
+        user: db.user,
+        host: db.host,
+        database: db.database,
+        password: db.password,
+        port: db.port,
 
     })
     await client.connect();
@@ -17,4 +19,4 @@ async function getConnection(){
 
     
 }
-module.exports={getConnection};
+export default  getConnection;

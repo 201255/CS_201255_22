@@ -1,8 +1,8 @@
-const express =  require('express');
+import express from 'express';
 
-const config = require('../config.js');
-const user = require('./components/user/network');
-const cors = require('cors');
+import { api } from '../config.js';
+import user from './components/user/network.js';
+import cors from 'cors';
 
 const app = express ();
 
@@ -10,6 +10,6 @@ app.use('/api_v1/user', user);
 
 app.use(cors({origin: true, credentials: true})); 
 
-app.listen(config.api.port, () =>{
-    console.log('Api escuchando en el puerto =>', config.api.port);
+app.listen(api.port, () =>{
+    console.log('Api escuchando en el puerto =>',api.port);
 });

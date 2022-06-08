@@ -1,7 +1,8 @@
 import { Router } from 'express';
 
 import { success as _success } from '../../../network/response.js';
-import  getConnection  from '../../../model/db.js';
+import  {getData}  from '../../../model/db.js';
+import { getUser } from '../../../model/Users.js';
 
 import cors from 'cors';
 const router = Router();
@@ -117,6 +118,16 @@ router.put('/update',cors(corsOptionsDelegate), async function (req, res) {
         .then(r => { _success(req, res, r, 200); })
         .catch(e => { _success(req, res, e.stack, 400); })
 
+});
+
+router.get('/all_users_orm', async function (req, res){
+    getUser.findAll({ attributes: ['username', 'email', 'password','phone_number']})
+    .then(users => {
+        res.send(users)
+    })
+    .catch(err =>{
+        console.log(err)
+    })
 });
 
 export default router;

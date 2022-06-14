@@ -121,7 +121,7 @@ router.put('/update', cors(corsOptionsDelegate), async function (req, res) {
 });
 
 router.get('/all_users_orm', async function (req, res) {
-    getUser.findAll({ attributes: ['username', 'email', 'password', 'phone_number'] })
+    getUser.findAll({ attributes: ['name'] })
         .then(users => {
             res.send(users)
         })

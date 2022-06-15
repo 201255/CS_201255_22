@@ -3,7 +3,7 @@ import Sequelize from 'sequelize';
 const {Pool} = pkg;
 //import  Pool from 'pg/lib/index.js';
 
-import { db } from '../config.js';
+import { db } from '../config/config.js';
 
 async function getConnection(){
     const client = new Pool({
@@ -35,7 +35,7 @@ const sequelizeClient = new Sequelize(db.database, db.user, db.password, {
     }
 });
 
-sequelizeClient.authenticate()
+sequelizeClient.sync({force: true})
 .then(() => {
     console.log('Conectado')
 })

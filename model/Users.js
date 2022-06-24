@@ -2,16 +2,7 @@ import { getData } from './db.js';
 import Sequelize from 'sequelize';
 import { DataTypes } from 'sequelize';
 import bcrypt from 'bcrypt';
-
-// const User = getData.sequelizeClient.define('cat_users',{
-//     id: { type: Sequelize.SMALLINT, primaryKey: true, autoIncrement:true},
-//     name: Sequelize.STRING,
-//     // email: Sequelize.STRING,
-//     // password: Sequelize.STRING,
-//     // phone_number: Sequelize.STRING,
-// }, {
-//     tableName: 'cat_users'
-// });
+import { getFather } from "./father.js";
 
 const User = getData.sequelizeClient.define('cat_users', {
     id: {
@@ -40,18 +31,23 @@ const User = getData.sequelizeClient.define('cat_users', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    phone_number : DataTypes.STRING,
+    phone_number: DataTypes.STRING,
 },
-{
-    tableName: 'cat_users',
-    freezeTableName: true,
-    hooks: {
-        beforeCreate: (user, options) => {
-            {
-                user.password = user.password && user.password != "" ? bcrypt.hashSync(user.password, 10) : "";
+    {
+        tableName: 'cat_users',
+        freezeTableName: true,
+        hooks: {
+            beforeCreate: (user, options) => {
+                {
+                    user.password = user.password && user.password != "" ? bcrypt.hashSync(user.password, 10) : "";
+                }
             }
         }
-    }
+    });
+
+User.hasMany(getFather, {
+    foreignKey: 'catUserId'
 });
+getFather.belongsTo(User);
 
 export const getUser = User;
